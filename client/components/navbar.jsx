@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 const Navbar = (props) => {
     return (
-        <div class="navbar">
+        <div className="navbar">
             <form method="POST" action='/login'>
             <input name="username" type="text" placeholder="Username"></input>
             <input name="password" type="password" placeholder="Password"></input>

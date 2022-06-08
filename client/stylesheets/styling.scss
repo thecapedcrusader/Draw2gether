@@ -1,5 +1,6 @@
 body {
     background: rgb(175, 88, 204);
+    margin: 0;
   }
 
 .navbar {
@@ -10,8 +11,53 @@ body {
   gap: 2%;
 }
 
-// #maincontainer div {
-//   background-color: transparent;
+// #player {
+//   position: relative;
+//   background-color: green;
+// }
+
+.video-container {
+  position: relative;
+}
+#player {
+  position: absolute;
+  margin: 0 auto;
+  left: 0;
+  top: 0;
+  z-index: 0;
+}
+
+#drawing-container {
+  position: absolute;
+  margin: 0 auto;
+  left: 0;
+  top: 0;
+  z-index: 1;
+}
+
+#buttons {
+  position: relative;
+  top: 750px;
+}
+
+button, button + button {
+  margin-left: 5%;
+  height: 8%;
+  width: 7%;
+}
+
+// canvas {
+//   position: absolute;
+//   margin: 0 auto;
+//   left: 0;
+//   top: 0;
+// }
+
+// #maincontainer div canvas {
+//   position: absolute;
+//   margin: 0 auto;
+//   left: 0;
+//   top: 0;
 // }
 
 // #maincontainer canvas {
