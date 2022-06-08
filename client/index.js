@@ -6,5 +6,5 @@ import styles from './stylesheets/styling.scss'
 
 render(
     <App />,
-    document.getElementById('root')
+    document.querySelector('body')
 );

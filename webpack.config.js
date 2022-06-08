@@ -38,7 +38,7 @@ module.exports =  {
         directory: path.resolve(__dirname, 'build'), 
         publicPath: '/build'
     },
-    compression: true,
+    compress: true,
     port: 8080
 }
 }

@@ -1,3 +1,19 @@
 body {
-    background: lightcoral;
+    background: rgb(175, 88, 204);
   }
+
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+  display: flex;
+  justify-content: right;
+  gap: 2%;
+}
+
+// #maincontainer div {
+//   background-color: transparent;
+// }
+
+// #maincontainer canvas {
+//   background-color: transparent;
+// }

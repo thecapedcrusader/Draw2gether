@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import MainContainer from './maincontainer.jsx'
+import Navbar from './navbar.jsx';
 
 class App extends Component {
     constructor(props) {
@@ -6,8 +8,10 @@ class App extends Component {
     }
     render() {
         return (
-            <div>
-            <button>testinggg</button>
+            <div id="app">
+                <Navbar />
+                <MainContainer />
+            <button>why hello</button>
             </div>
         )
     }
