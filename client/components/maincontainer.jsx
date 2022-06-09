@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { useEffect, useState } from "react";
 import DrawingContainer from './drawingcontainer.jsx';
 // import StorageContainer from 'storagecontainer.jsx';
 
@@ -10,12 +11,11 @@ import DrawingContainer from './drawingcontainer.jsx';
 
 //input field (mega markets) --> deconstruct youtube link and get video ID
   //pass through setPlayer hook
+  //check youtube iframe api documentation for loading video
 
-
-import { useEffect, useState } from "react";
-
+  //e.preventdefault, stoppropagation
 export default function App() {
-  const [player, setPlayer] = useState(); //i.src, 
+  const [player, setPlayer] = useState(); 
   useEffect(() => {
     var tag = document.createElement("script");
     tag.src = "https://www.youtube.com/iframe_api";
@@ -26,7 +26,7 @@ export default function App() {
     window.onYouTubeIframeAPIReady = function () {
       setPlayer(
         new YT.Player("player", {
-          videoId: "yuyV6G6atoQ",
+          videoId: "H6CSHJUaZfA",
           autoplay: false,
           width: 1200,
           height: 800,
@@ -44,7 +44,7 @@ export default function App() {
       );
     };
 
-    function onPlayerReady(event) { //trying to change state
+    function onPlayerReady(event) {  //use player.loadVideo, e.preventdefault, stoppropagation
       console.log('player is ready, buttons should now be functional')
       // console.log(player);
       // setPlayer(
@@ -87,8 +87,6 @@ export default function App() {
 
   return (
     <div className="video-container">
-      <h1>Hello CodeSandbox</h1>
-      <h2>Start editing to see some magic happen!</h2>
       <div id="player">
         <iframe
           title="player"

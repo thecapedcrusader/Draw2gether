@@ -3,7 +3,7 @@ body {
     margin: 0;
   }
 
-.navbar {
+.navbar, .navbar input {
   overflow: hidden;
   background-color: #333;
   display: flex;
@@ -11,14 +11,20 @@ body {
   gap: 2%;
 }
 
-// #player {
-//   position: relative;
-//   background-color: green;
-// }
+.navbar a {
+  color: black
+}
+
+h1 {
+  position: absolute;
+  color:rgb(17, 14, 14);
+  margin-left: 40%;
+}
 
 .video-container {
   position: relative;
 }
+
 #player {
   position: absolute;
   margin: 0 auto;
@@ -37,7 +43,15 @@ body {
 
 #buttons {
   position: relative;
-  top: 750px;
+  top: 400px;
+  left: 1150px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  // display: grid;
+  // grid: auto-flow / 1fr 1fr 1fr 1fr;
+  // width: 5%;
+  // height: 5%;
 }
 
 button, button + button {
@@ -46,20 +60,6 @@ button, button + button {
   width: 7%;
 }
 
-// canvas {
-//   position: absolute;
-//   margin: 0 auto;
-//   left: 0;
-//   top: 0;
-// }
-
-// #maincontainer div canvas {
-//   position: absolute;
-//   margin: 0 auto;
-//   left: 0;
-//   top: 0;
-// }
-
-// #maincontainer canvas {
-//   background-color: transparent;
-// }
+.drawing-buttons input{
+  width: 5%;
+}

@@ -5,7 +5,7 @@ class DrawingContainer extends Component {
     constructor(props) {
     super(props);
     this.state = {
-        color: "#ffc600",
+        color: "red",
         brushRadius: 10,
         lazyRadius: 12,
       };
@@ -15,6 +15,10 @@ class DrawingContainer extends Component {
         <div id="drawing-container">
         <CanvasDraw
         ref={canvasDrawing => (this.drawingCanvas = canvasDrawing)}
+        brushColor={this.state.color}
+        brushRadius={this.state.brushRadius}
+        lazyRadius={this.state.lazyRadius}
+        loadTimeOffset={10}
         clampLinesToDocument
         hideGrid
         backgroundColor='transparent'
@@ -46,14 +50,14 @@ class DrawingContainer extends Component {
           >
             Undo
           </button>
-          <button
+          {/* <button
             onClick={() => {
               console.log(this.drawingCanvas.getDataURL());
               alert("DataURL written to console")
             }}
           >
             GetDataURL
-          </button>
+          </button> */}
           <button
           onClick={() => {
             this.drawingCanvas.loadSaveData(
@@ -63,7 +67,6 @@ class DrawingContainer extends Component {
         >
           Load your previously saved drawing!
         </button>
-          <div>
             <label>Brush-Radius:</label>
             <input
               type="number"
@@ -72,8 +75,6 @@ class DrawingContainer extends Component {
                 this.setState({ brushRadius: parseInt(e.target.value, 10) })
               }
             />
-          </div>
-          <div>
             <label>Lazy-Radius:</label>
             <input
               type="number"
@@ -82,7 +83,14 @@ class DrawingContainer extends Component {
                 this.setState({ lazyRadius: parseInt(e.target.value, 10) })
               }
             />
-          </div>
+            <label>Color:</label>
+            <input
+              type="text"
+              value={this.state.color}
+              onChange={e =>
+                this.setState({ color: String(e.target.value) })
+              }
+            />
         </div>
     </div>
     )
