@@ -27,22 +27,11 @@ app.use(express.json());
 // /login, ./signup -- authentication
 // https://developers.google.com/youtube/player_parameters
 
-
-//scraping video id
-    //video becomes -- https://www.youtube.com/embed/videoid
-// let output;
-// const videoIDScraper = (link) => {
-//     output = link.split('=')[1];
-// }
-// console.log('https://www.youtube.com/watch?v=yuyV6G6atoQ'.split('='));
-// videoIDScraper('https://www.youtube.com/watch?v=yuyV6G6atoQ');
-// console.log(output);
-
 //https://developers.google.com/youtube/player_parameters youtube iframe parameters
 // https://www.youtube.com/embed/70qN5Pn9Wu0?autoplay=1&amp;mute=0&amp;controls=0&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;iv_load_policy=3&amp;modestbranding=1&amp;enablejsapi=1
 //origin=https%3A%2F%2Finsights.gg
 
-//time management, imposter syndrome, youtube api iframes, learning about hooks and refs in react
+//time management, imposter syndrome, youtube api iframes, learning about hooks and creating refs to components in react
 //libraries for drawing, react-canvas-draw
 //youtube iframe embed link iframe parameters couldn't access from cross origin, then transitioned to youtube iframe api
 
@@ -56,6 +45,10 @@ app.get('/drawing', getDrawings, (req, res) => {
 
 app.post('/drawing', saveDrawings, (req, res) => {
     res.status(200).send(res.locals.successSave);
+})
+
+app.delete('/drawing', deleteLastDrawing, (req, res) => {
+    res.status(200).send(res.locals.deletedDrawing);
 })
 
 
@@ -74,6 +67,18 @@ function saveDrawings(req, res, next) {
         res.locals.successSave = data;
         next();
     })
+}
+
+function deleteLastDrawing(req, res, next) {
+
+    drawingModel.find({}).sort({ _id: -1 }).limit(1)
+        .then(data => {
+            drawingModel.deleteOne({ _id: data[0]._id })
+                .then(response => {
+                    res.locals.deletedDrawing = response;
+                    next();
+                
+                })})
 }
 
 

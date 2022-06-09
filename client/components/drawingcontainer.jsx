@@ -11,6 +11,7 @@ class DrawingContainer extends Component {
       };
     this.fetchDrawings = this.fetchDrawings.bind(this);
     this.saveDrawing = this.saveDrawing.bind(this);
+    this.deleteDrawing = this.deleteDrawing.bind(this);
     }
     
     async fetchDrawings() { //async and return
@@ -34,8 +35,20 @@ class DrawingContainer extends Component {
                 drawingStored: this.drawingCanvas.getSaveData(),
             })
         }).then(response => response.json())
-        .then((responseJson) => console.log(responseJson))
+        .then((data) => console.log(data))
     }
+
+    deleteDrawing() {
+      fetch('/drawing', {
+          method: 'DELETE',
+          headers: {
+              'Accept': 'application/json',
+              'Content-type': 'application/json',
+              "Access-Control-Origin": "*"
+          }
+      }).then(response => response.json())
+      .then((data) => console.log(data))
+  }
 
 
     render() {
@@ -47,7 +60,7 @@ class DrawingContainer extends Component {
         brushColor={this.state.color}
         brushRadius={this.state.brushRadius}
         lazyRadius={this.state.lazyRadius}
-        loadTimeOffset={10}
+        loadTimeOffset={20}
         clampLinesToDocument
         hideGrid
         backgroundColor='transparent'
@@ -55,17 +68,6 @@ class DrawingContainer extends Component {
         canvasWidth='1200'
     />
     <div className='drawing-buttons'>
-          <button
-            onClick={() => {
-            //   localStorage.setItem(
-            //     "savedDrawing",
-            //     this.drawingCanvas.getSaveData()
-            //   );
-            this.saveDrawing();
-            }}
-          >
-            Save
-          </button>
           <button
             onClick={() => {
               this.drawingCanvas.eraseAll();
@@ -80,15 +82,26 @@ class DrawingContainer extends Component {
           >
             Undo
           </button>
-          {/* <button
+          <button
             onClick={() => {
-              console.log(this.drawingCanvas.getDataURL());
-              alert("DataURL written to console")
+            //   localStorage.setItem(
+            //     "savedDrawing",
+            //     this.drawingCanvas.getSaveData()
+            //   );
+            this.saveDrawing();
             }}
           >
-            GetDataURL
-          </button> */}
+            Save
+          </button>
           <button
+            onClick={() => {
+              this.deleteDrawing();
+            }}
+          >
+            Delete Last Saved Drawing
+          </button>
+          <button
+          id='push-this'
           onClick={() => {
             // this.drawingCanvas.loadSaveData(
             //   localStorage.getItem("savedDrawing")

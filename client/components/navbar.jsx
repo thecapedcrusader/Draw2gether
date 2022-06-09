@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 const Navbar = (props) => {
     return (
         <div>
-            <h1>Draw2gether</h1>
+            <h1>Draw2️⃣Gether</h1>
             <div className="navbar">
                 <form method="POST" action='/login'>
                 <input name="username" type="text" placeholder="Username"></input>

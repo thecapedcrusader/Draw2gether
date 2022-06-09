@@ -15,7 +15,8 @@ import DrawingContainer from './drawingcontainer.jsx';
 
   //e.preventdefault, stoppropagation
 export default function App() {
-  const [player, setPlayer] = useState(); 
+  const [url, setUrl] = useState('');
+  const [player, setPlayer] = useState(''); 
   useEffect(() => {
     var tag = document.createElement("script");
     tag.src = "https://www.youtube.com/iframe_api";
@@ -44,32 +45,51 @@ export default function App() {
       );
     };
 
-    function onPlayerReady(event) {  //use player.loadVideo, e.preventdefault, stoppropagation
+    function onPlayerReady(event) { 
+      event.target.setVolume(10);
       console.log('player is ready, buttons should now be functional')
-      // console.log(player);
-      // setPlayer(
-      //   new YT.Player("player", {
-      //     videoId: "p3CSkx8wnFk",
-      //     autoplay: false,
-      //     width: 1200,
-      //     height: 800,
-      //     playerVars: {
-      //       controls: 0,
-      //       iv_load_policy: 3,
-      //       modestbranding: 1,
-      //       enablejsapi: 1,
-      //       playsinline: 1,
-      //     },
-      //     events: {
-      //       onReady: onPlayerReady
-      //     }
-      //   })
-      // );
     }
   }, []);
 
+  const changeVid = () => {
+    //use player.loadVideo, if page refreshes, try e.preventdefault, stoppropagation
+
+    const splitLink = url.split('=');
+    let videoID = splitLink[1];
+    let timeStamp = 0;
+
+    if (splitLink[2] !== undefined) {
+      videoID = videoID.slice(0, -2);
+      timeStamp = parseInt(splitLink[2].slice(0, -1));
+    }
+
+    
+    console.log(videoID, typeof timeStamp, timeStamp);
+    
+    // setPlayer(player.cueVideoById({ 'videoId': videoID, 'startSeconds': timeStamp }));
+    
+    setPlayer(player.loadVideoById(videoID, timeStamp));
+
+    setUrl('');
+
+
+    //youtube.com/watch?v=a5QnXi_lZII&t=351s
+
+
+    //https://www.youtube.com/watch?v=a5QnXi_lZII&t=351s test this link
+    //scraping video id
+    //video becomes -- https://www.youtube.com/embed/videoid
+// let output;
+// const videoIDScraper = (link) => {
+//     output = link.split('=')[1];
+// }
+// console.log('https://www.youtube.com/watch?v=yuyV6G6atoQ'.split('='));
+// videoIDScraper('https://www.youtube.com/watch?v=yuyV6G6atoQ');
+// console.log(output);
+  }
+
   const playVid = () => {
-    console.log(player.i.src);
+    // console.log(player.i.src);
     player.playVideo();
   };
 
@@ -81,7 +101,7 @@ export default function App() {
     player.unMute();
   };
 
-  const muteVid = () => {
+  const muteVid = () => { //make unmute
     player.mute();
   };
 
@@ -99,7 +119,15 @@ export default function App() {
         <button onClick={playVid}>►</button>
         <button onClick={pauseVid}>❚❚</button>
         <button onClick={muteVid}>Mute</button>
-        <button onClick={unMuteVid}>Unmute</button>
+        <button onClick={changeVid}>Change Video</button>
+        <br /><br /><br /><br />
+        <input
+        id="url-field"
+        value={url}
+        onChange={e => {
+        setUrl(e.target.value)
+        }}
+        />
       </div>
     </div>
   );
