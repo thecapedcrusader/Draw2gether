@@ -9,8 +9,37 @@ class DrawingContainer extends Component {
         brushRadius: 10,
         lazyRadius: 12,
       };
+    this.fetchDrawings = this.fetchDrawings.bind(this);
+    this.saveDrawing = this.saveDrawing.bind(this);
     }
-      render() {
+    
+    async fetchDrawings() { //async and return
+        // fetch('/drawing')
+        //     .then(response => response.json())
+        //     .then(data => console.log('testing to get drawing', data[data.length - 1].drawingStored))
+        const response = await fetch('/drawing')
+        const data = await response.json();
+        return data[data.length - 1].drawingStored;
+    }
+
+    saveDrawing() {
+        fetch('/drawing', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json',
+                "Access-Control-Origin": "*"
+            },
+            body: JSON.stringify({
+                drawingStored: this.drawingCanvas.getSaveData(),
+            })
+        }).then(response => response.json())
+        .then((responseJson) => console.log(responseJson))
+    }
+
+
+    render() {
+    
     return ( 
         <div id="drawing-container">
         <CanvasDraw
@@ -28,10 +57,11 @@ class DrawingContainer extends Component {
     <div className='drawing-buttons'>
           <button
             onClick={() => {
-              localStorage.setItem(
-                "savedDrawing",
-                this.drawingCanvas.getSaveData()
-              );
+            //   localStorage.setItem(
+            //     "savedDrawing",
+            //     this.drawingCanvas.getSaveData()
+            //   );
+            this.saveDrawing();
             }}
           >
             Save
@@ -60,9 +90,11 @@ class DrawingContainer extends Component {
           </button> */}
           <button
           onClick={() => {
-            this.drawingCanvas.loadSaveData(
-              localStorage.getItem("savedDrawing")
-            );
+            // this.drawingCanvas.loadSaveData(
+            //   localStorage.getItem("savedDrawing")
+            // );
+            const someUnresolvedPromiseContainingADrawing = this.fetchDrawings();
+           someUnresolvedPromiseContainingADrawing.then((result) => this.drawingCanvas.loadSaveData(result));
           }}
         >
           Load your previously saved drawing!

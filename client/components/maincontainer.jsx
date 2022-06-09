@@ -26,7 +26,7 @@ export default function App() {
     window.onYouTubeIframeAPIReady = function () {
       setPlayer(
         new YT.Player("player", {
-          videoId: "H6CSHJUaZfA",
+          videoId: "OSu1UxPmWXc",//"H6CSHJUaZfA", 
           autoplay: false,
           width: 1200,
           height: 800,

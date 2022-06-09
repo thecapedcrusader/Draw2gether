@@ -10,24 +10,8 @@ const PORT = 3000;
 app.use('/build', express.static(path.join(__dirname, '../build')));
 app.use(express.json());
 
-// port number
+// port number, proxy server
 //app.use urlencoded, cookie-parser, express() (JSON)
-
-//mongoose, mongodb
-
-// ---------------------------------------
-// HIERARCHY
-// |-- App
-//  |-- Nav Bar
-//   |-- MainContainer (Video Embed)
-//      |-- Drawing Container
-//         |-- Drawing Bar (Buttons)
-//      |-- Storage Container
-//         |-- History (Previous Videos pulled from DB)
-// ---------------------------------------
-
-//connect database
-//save brushes in database?
 
 /*
  * create an application that is able to draw on videos where the video is an INPUT by the USER CLIENT
@@ -40,7 +24,7 @@ app.use(express.json());
 // insights.gg
 //change this.props in maincontainer
     //newlocation for links
-// /login, ./signup
+// /login, ./signup -- authentication
 // https://developers.google.com/youtube/player_parameters
 
 
@@ -62,18 +46,38 @@ app.use(express.json());
 //libraries for drawing, react-canvas-draw
 //youtube iframe embed link iframe parameters couldn't access from cross origin, then transitioned to youtube iframe api
 
-app.get('/', getDrawings, (req, res) => {
+app.get('/', (req, res) => {
     res.status(200).sendFile(path.resolve(__dirname, '../client/index.html'));
 })
+
+app.get('/drawing', getDrawings, (req, res) => {
+    res.status(200).send(res.locals.drawingData);
+})
+
+app.post('/drawing', saveDrawings, (req, res) => {
+    res.status(200).send(res.locals.successSave);
+})
+
+
+
+//middleware funcs
+function getDrawings(req, res, next) {
+    drawingModel.find({}, (err, data) => {
+        res.locals.drawingData = data;
+        next();
+    })
+}
+
+function saveDrawings(req, res, next) { 
+    const newDrawing = new drawingModel({ drawingStored: req.body.drawingStored })
+    newDrawing.save((err, data) => {
+        res.locals.successSave = data;
+        next();
+    })
+}
+
 
 
 app.listen(PORT, () => {
     console.log('listening on port:', PORT, process.env.NODE_ENV);
 });
-
-function getDrawings(req, res, next) {
-    drawingModel.find({}, (err, data) => {
-        console.log('this is the data im looking for', data)
-    })
-    next();
-}
